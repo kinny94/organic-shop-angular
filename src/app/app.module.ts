@@ -14,6 +14,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CustomFormsModule } from 'ng2-validation';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -135,6 +136,7 @@ import { ProductService } from '../services/product.service';
 			DemoMaterialModule,
 			FormsModule,
 			ReactiveFormsModule,
+			CustomFormsModule,
 			AngularFireModule.initializeApp( environment.firebase ),
 			AngularFireAuthModule,
 			AngularFireDatabaseModule,
