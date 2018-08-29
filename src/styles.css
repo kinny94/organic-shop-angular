@@ -8,10 +8,16 @@ body{
 
 .form-full-width {
 	min-width: 150px;
-	max-width: 800px;
+	max-width: 90%;
 	width:100%;
 }
 
 .input-full-width {
 	width:800px;
+}
+
+.mat-elevation-z8{
+	min-width: 150px;
+	max-width: 100%;
+	width:100%;
 }
