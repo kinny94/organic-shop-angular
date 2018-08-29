@@ -1,3 +1,5 @@
+import { ProductService } from './../../../services/product.service';
+import { CategoryService } from './../../../services/category.service';
 import { Component } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 
@@ -8,12 +10,16 @@ import {FormControl, Validators} from '@angular/forms';
 })
 export class ProductFormComponent{
 
-	constructor() { }
+	categories$;
+	constructor( categoryService: CategoryService, private productService: ProductService ) {
+		this.categories$ = categoryService.getCategories().valueChanges();
+	}
 
 	emailFormControl = new FormControl('', [
-
-		Validators.required,
-		Validators.email,
+		Validators.required
 	]);
 
+	save( product ){
+		this.productService.create( product );
+	}
 }

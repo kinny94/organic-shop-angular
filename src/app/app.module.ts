@@ -1,3 +1,4 @@
+import { CategoryService } from './../services/category.service';
 import { AdminAuthGuardService } from './../services/admin-auth-guard.service';
 import { UserService } from './../services/user.service';
 import { AuthGuardService } from './../services/auth-guard.service';
@@ -67,6 +68,7 @@ import {
 	MatToolbarModule,
 	MatTooltipModule,
 	MatTreeModule, } from '@angular/material';
+import { ProductService } from '../services/product.service';
 
 	@NgModule({
 		exports: [
@@ -156,7 +158,9 @@ import {
 			AuthService,
 			AuthGuardService,
 			UserService,
-			AdminAuthGuardService
+			CategoryService,
+			AdminAuthGuardService,
+			ProductService
 		],
 		bootstrap: [AppComponent]
 	})
