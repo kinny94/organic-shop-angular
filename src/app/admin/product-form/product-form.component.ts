@@ -2,6 +2,7 @@ import { ProductService } from './../../../services/product.service';
 import { CategoryService } from './../../../services/category.service';
 import { Component } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-product-form',
@@ -11,7 +12,7 @@ import {FormControl, Validators} from '@angular/forms';
 export class ProductFormComponent{
 
 	categories$;
-	constructor( categoryService: CategoryService, private productService: ProductService ) {
+	constructor( private categoryService: CategoryService, private productService: ProductService, private router: Router ) {
 		this.categories$ = categoryService.getCategories().valueChanges();
 	}
 
@@ -21,5 +22,6 @@ export class ProductFormComponent{
 
 	save( product ){
 		this.productService.create( product );
+		this.router.navigate([ '/admin/products' ]);
 	}
 }
