@@ -1,3 +1,4 @@
+import { of } from 'rxjs';
 import { Observable } from 'rxjs';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Injectable } from '@angular/core';
@@ -32,8 +33,14 @@ export class AuthService {
 
 	//Observable that returns Appuser object
 	get appUser$() : Observable<AppUser>{
-		return this.user$.pipe( switchMap ( data => {
-			return this.userService.get( data.uid ).valueChanges()
+
+		return this.user$.pipe( switchMap ( user => {
+			if( user ){
+				return this.userService.get( user.uid ).valueChanges();
+			}
+
+			return of( null );
+
 		}));
 	}
 
