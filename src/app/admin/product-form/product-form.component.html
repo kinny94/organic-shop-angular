@@ -1,0 +1,46 @@
+<form>
+	<div>
+		<form class="form">
+			<div>
+				<mat-form-field class="form-full-width">
+					<input id="title" matInput placeholder="Title" [formControl]="emailFormControl">
+					<mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+						Please enter a valid email address
+					</mat-error>
+					<mat-error *ngIf="emailFormControl.hasError('required')">
+						Email is <strong>required</strong>
+					</mat-error>
+				</mat-form-field>
+			</div>
+
+			<div>
+				<mat-form-field class="form-full-width">
+					<input id="price" type="number" matInput placeholder="Price" [formControl]="emailFormControl">
+					<span matPrefix>$&nbsp;</span>
+    				<span matSuffix>.00</span>
+				</mat-form-field>
+			</div>
+
+			<div>
+				<mat-form-field class="form-full-width">
+					<mat-select id="category" placeholder="Favorite food">
+						<mat-option>
+
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</div>
+
+			<div>
+				<mat-form-field class="form-full-width">
+					<input id="imageUrl" matInput placeholder="Image Url" [formControl]="emailFormControl">
+				</mat-form-field>
+			</div>
+
+			<div>
+				<button mat-raised-button color="primary">Submit</button>
+			</div>
+
+		</form>
+	</div>
+</form>

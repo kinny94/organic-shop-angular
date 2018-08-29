@@ -27,53 +27,137 @@ import { AdminOrdersComponent } from './admin/admin-orders/admin-orders.componen
 import { LoginComponent } from './login/login.component';
 import { ProductFormComponent } from './admin/product-form/product-form.component';
 
-import {  MatButtonModule, MatButtonToggleModule } from '@angular/material';
+import '../polyfills';
+import {CdkTableModule} from '@angular/cdk/table';
+import {CdkTreeModule} from '@angular/cdk/tree';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {
+	MatAutocompleteModule,
+	MatBadgeModule,
+	MatBottomSheetModule,
+	MatButtonModule,
+	MatButtonToggleModule,
+	MatCardModule,
+	MatCheckboxModule,
+	MatChipsModule,
+	MatDatepickerModule,
+	MatDialogModule,
+	MatDividerModule,
+	MatExpansionModule,
+	MatGridListModule,
+	MatIconModule,
+	MatInputModule,
+	MatListModule,
+	MatMenuModule,
+	MatNativeDateModule,
+	MatPaginatorModule,
+	MatProgressBarModule,
+	MatProgressSpinnerModule,
+	MatRadioModule,
+	MatRippleModule,
+	MatSelectModule,
+	MatSidenavModule,
+	MatSliderModule,
+	MatSlideToggleModule,
+	MatSnackBarModule,
+	MatSortModule,
+	MatStepperModule,
+	MatTableModule,
+	MatTabsModule,
+	MatToolbarModule,
+	MatTooltipModule,
+	MatTreeModule, } from '@angular/material';
 
-@NgModule({
-	declarations: [
-		AppComponent,
-		NavbarComponent,
-		HomeComponent,
-		ProductsComponent,
-		CartComponent,
-		CheckoutComponent,
-		OrderSuccessComponent,
-		MyOrdersComponent,
-		AdminProductsComponent,
-		AdminOrdersComponent,
-		LoginComponent,
-		ProductFormComponent
-	],
-	imports: [
-		BrowserModule,
-		BrowserAnimationsModule,
-		MatButtonModule,
-		MatButtonToggleModule,
-		AngularFireModule.initializeApp( environment.firebase ),
-		AngularFireAuthModule,
-		AngularFireDatabaseModule,
-		NgbModule.forRoot(),
-		RouterModule.forRoot([
-			{	path: '',	component: HomeComponent },
-			{	path: 'products',	component: ProductsComponent},
-			{	path: 'cart',	component: CartComponent },
-			{	path: 'login',	component: LoginComponent },
+	@NgModule({
+		exports: [
+			CdkTableModule,
+			CdkTreeModule,
+			MatAutocompleteModule,
+			MatBadgeModule,
+			MatBottomSheetModule,
+			MatButtonModule,
+			MatButtonToggleModule,
+			MatCardModule,
+			MatCheckboxModule,
+			MatChipsModule,
+			MatStepperModule,
+			MatDatepickerModule,
+			MatDialogModule,
+			MatDividerModule,
+			MatExpansionModule,
+			MatGridListModule,
+			MatIconModule,
+			MatInputModule,
+			MatListModule,
+			MatMenuModule,
+			MatNativeDateModule,
+			MatPaginatorModule,
+			MatProgressBarModule,
+			MatProgressSpinnerModule,
+			MatRadioModule,
+			MatRippleModule,
+			MatSelectModule,
+			MatSidenavModule,
+			MatSliderModule,
+			MatSlideToggleModule,
+			MatSnackBarModule,
+			MatSortModule,
+			MatTableModule,
+			MatTabsModule,
+			MatToolbarModule,
+			MatTooltipModule,
+			MatTreeModule,
+		]
+	})
+	export class DemoMaterialModule {}
 
-			{	path: 'checkout',	component: CheckoutComponent, canActivate: [ AuthGuardService ] },
-			{	path: 'order-success',	component: OrderSuccessComponent, canActivate: [ AuthGuardService ] },
-			{	path: 'my/orders', component: MyOrdersComponent, canActivate: [ AuthGuardService ] },
 
-			{	path: 'admin/products', component: AdminProductsComponent, canActivate: [ AuthGuardService, AdminAuthGuardService ] },
-			{	path: 'admin/orders',	component: AdminOrdersComponent, canActivate: [ AuthGuardService, AdminAuthGuardService ] },
-			{ 	path: 'admin/products/new', component: ProductFormComponent, canActivate: [ AuthGuardService, AdminAuthGuardService 	]}
-		])
-	],
-	providers: [
-		AuthService,
-		AuthGuardService,
-		UserService,
-		AdminAuthGuardService
-	],
-	bootstrap: [AppComponent]
-})
-export class AppModule { }
+	@NgModule({
+		declarations: [
+			AppComponent,
+			NavbarComponent,
+			HomeComponent,
+			ProductsComponent,
+			CartComponent,
+			CheckoutComponent,
+			OrderSuccessComponent,
+			MyOrdersComponent,
+			AdminProductsComponent,
+			AdminOrdersComponent,
+			LoginComponent,
+			ProductFormComponent,
+		],
+		imports: [
+			BrowserModule,
+			BrowserAnimationsModule,
+			DemoMaterialModule,
+			FormsModule,
+			ReactiveFormsModule,
+			AngularFireModule.initializeApp( environment.firebase ),
+			AngularFireAuthModule,
+			AngularFireDatabaseModule,
+			NgbModule.forRoot(),
+			RouterModule.forRoot([
+				{	path: '',	component: HomeComponent },
+				{	path: 'products',	component: ProductsComponent},
+				{	path: 'cart',	component: CartComponent },
+				{	path: 'login',	component: LoginComponent },
+
+				{	path: 'checkout',	component: CheckoutComponent, canActivate: [ AuthGuardService ] },
+				{	path: 'order-success',	component: OrderSuccessComponent, canActivate: [ AuthGuardService ] },
+				{	path: 'my/orders', component: MyOrdersComponent, canActivate: [ AuthGuardService ] },
+
+				{	path: 'admin/products', component: AdminProductsComponent, canActivate: [ AuthGuardService, AdminAuthGuardService ] },
+				{	path: 'admin/orders',	component: AdminOrdersComponent, canActivate: [ AuthGuardService, AdminAuthGuardService ] },
+				{ 	path: 'admin/products/new', component: ProductFormComponent, canActivate: [ AuthGuardService, AdminAuthGuardService 	]}
+			])
+		],
+		providers: [
+			AuthService,
+			AuthGuardService,
+			UserService,
+			AdminAuthGuardService
+		],
+		bootstrap: [AppComponent]
+	})
+	export class AppModule { }
