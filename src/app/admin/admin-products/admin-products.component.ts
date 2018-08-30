@@ -1,9 +1,9 @@
 import { of, Subscription } from 'rxjs';
 import { ProductService } from './../../../services/product.service';
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { Sort } from '@angular/material';
+import { Sort, MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 
 export interface Product {
 	title: string;
@@ -25,12 +25,12 @@ function compare(a, b, isAsc) {
 
 export class AdminProductsComponent implements OnDestroy{
 
-	products: Product[];
-	filteredProducts: any[];
 	subscription: Subscription;
 	displayedColumns: string[] = ['title', 'price', 'category', 'edit', 'delete'];
+	dataSource: MatTableDataSource<Product>;
 
-	sortedData: Product[];
+	@ViewChild(MatPaginator) paginator: MatPaginator;
+	@ViewChild(MatSort) sort: MatSort;
 
 	constructor( private productService: ProductService, private router: Router  ) {
 
@@ -47,11 +47,11 @@ export class AdminProductsComponent implements OnDestroy{
 				obj["imageUrl"] = element.payload.val()["imageUrl"];
 				allProducts.push( obj );
 				obj = {};
-
-				this.filteredProducts = this.products = allProducts;
-				this.sortedData = this.products.slice();
 			});
-			return of( allProducts );
+
+			this.dataSource = new MatTableDataSource( allProducts );
+			this.dataSource.paginator = this.paginator;
+			this.dataSource.sort = this.sort;
 		})).subscribe();
 	}
 
@@ -63,32 +63,19 @@ export class AdminProductsComponent implements OnDestroy{
 	}
 
 	filter( query:string ){
-		this.filteredProducts = ( query ) ?
-		this.products.filter( product => product.title.toLowerCase().includes( query.toLowerCase() )) :
-		this.products;
-	}
-
-	sortData(sort: Sort) {
-		const data = this.products.slice();
-		if (!sort.active || sort.direction === '') {
-			this.sortedData = data;
-			return;
-		}
-
-		this.sortedData = data.sort((a, b) => {
-			const isAsc = sort.direction === 'asc';
-			switch (sort.active) {
-				case 'title': return compare(a.title, b.title, isAsc);
-				case 'price': return compare(a.price, b.price, isAsc);
-				case 'category': return compare(a.category, b.category, isAsc);
-				default: return 0;
-			}
-		});
-
-		this.filteredProducts = this.sortedData;
+		query = query.trim(); // Remove whitespace
+   		query = query.toLowerCase(); // Datasource defaults to lowercase matches
+    	this.dataSource.filter = query;
 	}
 
 	ngOnDestroy(){
 		this.subscription.unsubscribe();
 	}
 }
+
+
+
+
+
+
+

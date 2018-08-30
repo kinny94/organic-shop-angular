@@ -54,6 +54,7 @@ import {
 	MatMenuModule,
 	MatNativeDateModule,
 	MatPaginatorModule,
+	MatPaginator,
 	MatProgressBarModule,
 	MatProgressSpinnerModule,
 	MatRadioModule,
