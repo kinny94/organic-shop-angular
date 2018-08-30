@@ -12,10 +12,6 @@ export interface Product {
 	imageUrl: string;
 }
 
-function compare(a, b, isAsc) {
-	return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
-}
-
 
 @Component({
 	selector: 'app-admin-products',
