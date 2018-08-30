@@ -1,48 +1,49 @@
+import { Observable, of } from 'rxjs';
 import { ProductService } from './../../../services/product.service';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { map } from 'rxjs/operators';
 
-export interface PeriodicElement {
-	name: string;
-	position: number;
-	weight: number;
-	symbol: string;
+export interface elements {
+	title: string;
+	price: number;
+	category: string;
+	imageUrl: string;
 }
-
-const ELEMENT_DATA: PeriodicElement[] = [
-	{position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-	{position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-	{position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-	{position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-	{position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-	{position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-	{position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-	{position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-	{position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-	{position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-];
-
 @Component({
 	selector: 'app-admin-products',
 	templateUrl: './admin-products.component.html',
 	styleUrls: ['./admin-products.component.css']
 })
 
-export class AdminProductsComponent implements OnInit {
+export class AdminProductsComponent{
 
-	datasource;
-	//displayedColumns: string[] = ['title', 'price', 'category', 'url' ];
+	datasource: Observable<any>;
+	displayedColumns: string[] = ['title', 'price', 'category', 'image'];
 
-	constructor( private productService: ProductService ) {
-		this.datasource = this.productService.getAll().subscribe( data => {
-			this.datasource = data;
-			console.log( this.datasource );
+	constructor( private productService: ProductService  ) {
+
+		this.productService.getAll().pipe( map( data => {
+			let allProducts = [];
+			data.forEach(element => {
+				let obj = {};
+				obj["id"] = element.key;
+				obj["category"] = element.payload.val()["category"];
+				obj["title"] = element.payload.val()["title"];
+				obj["price"] = element.payload.val()["price"];
+				obj["imageUrl"] = element.payload.val()["imageUrl"];
+				allProducts.push( obj );
+				obj = {};
+			});
+			return of( allProducts );
+		})).subscribe(( elements ) => {
+			this.datasource = elements;
 		});
+
+		// this.productService.getAll().pipe( map( data => {
+		// 	console.log( data );
+		// 	return of( data );
+		// })).subscribe(( elements ) => {
+		// 	this.datasource = elements;
+		// });
 	}
-
-	ngOnInit() {
-	}
-
-	displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  	dataSource = ELEMENT_DATA;
-
 }

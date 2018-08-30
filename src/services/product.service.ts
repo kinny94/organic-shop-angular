@@ -1,4 +1,4 @@
-import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireDatabase, snapshotChanges } from 'angularfire2/database';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -13,6 +13,10 @@ export class ProductService {
 	}
 
 	getAll(){
-		return this.db.list( '/product' ).valueChanges();
+		return this.db.list( '/product' ).snapshotChanges();
+	}
+
+	getProduct( productId ){
+		return this.db.object( '/product/' + productId ).valueChanges();
 	}
 }
