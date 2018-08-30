@@ -3,7 +3,6 @@ import { CategoryService } from './../../../services/category.service';
 import { Component } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { take } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-product-form',
@@ -29,7 +28,6 @@ export class ProductFormComponent{
 				this.product = product;
 			})
 		}
-
 	}
 
 	emailFormControl = new FormControl('', [

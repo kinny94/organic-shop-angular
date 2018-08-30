@@ -1,8 +1,9 @@
-import { Observable, of, Subscription } from 'rxjs';
+import { of, Subscription } from 'rxjs';
 import { ProductService } from './../../../services/product.service';
 import { Component, OnDestroy } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { Sort } from '@angular/material';
 
 export interface Product {
 	title: string;
@@ -10,6 +11,12 @@ export interface Product {
 	category: string;
 	imageUrl: string;
 }
+
+function compare(a, b, isAsc) {
+	return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+}
+
+
 @Component({
 	selector: 'app-admin-products',
 	templateUrl: './admin-products.component.html',
@@ -22,6 +29,8 @@ export class AdminProductsComponent implements OnDestroy{
 	filteredProducts: any[];
 	subscription: Subscription;
 	displayedColumns: string[] = ['title', 'price', 'category', 'edit', 'delete'];
+
+	sortedData: Product[];
 
 	constructor( private productService: ProductService, private router: Router  ) {
 
@@ -40,6 +49,7 @@ export class AdminProductsComponent implements OnDestroy{
 				obj = {};
 
 				this.filteredProducts = this.products = allProducts;
+				this.sortedData = this.products.slice();
 			});
 			return of( allProducts );
 		})).subscribe();
@@ -54,8 +64,28 @@ export class AdminProductsComponent implements OnDestroy{
 
 	filter( query:string ){
 		this.filteredProducts = ( query ) ?
-			this.products.filter( product => product.title.toLowerCase().includes( query.toLowerCase() )) :
-			this.products;
+		this.products.filter( product => product.title.toLowerCase().includes( query.toLowerCase() )) :
+		this.products;
+	}
+
+	sortData(sort: Sort) {
+		const data = this.products.slice();
+		if (!sort.active || sort.direction === '') {
+			this.sortedData = data;
+			return;
+		}
+
+		this.sortedData = data.sort((a, b) => {
+			const isAsc = sort.direction === 'asc';
+			switch (sort.active) {
+				case 'title': return compare(a.title, b.title, isAsc);
+				case 'price': return compare(a.price, b.price, isAsc);
+				case 'category': return compare(a.category, b.category, isAsc);
+				default: return 0;
+			}
+		});
+
+		this.filteredProducts = this.sortedData;
 	}
 
 	ngOnDestroy(){
