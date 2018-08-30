@@ -6,9 +6,9 @@ body{
 	padding-top: 80px;
 }
 
-.form-full-width {
+.form-full-width, .mat-form-field{
 	min-width: 150px;
-	max-width: 90%;
+	max-width: 100%;
 	width:100%;
 }
 
