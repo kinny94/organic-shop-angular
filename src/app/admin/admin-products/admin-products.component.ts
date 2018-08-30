@@ -2,6 +2,7 @@ import { Observable, of } from 'rxjs';
 import { ProductService } from './../../../services/product.service';
 import { Component } from '@angular/core';
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 export interface elements {
 	title: string;
@@ -18,14 +19,16 @@ export interface elements {
 export class AdminProductsComponent{
 
 	datasource: Observable<any>;
-	displayedColumns: string[] = ['title', 'price', 'category', 'image'];
+	displayedColumns: string[] = ['title', 'price', 'category', 'edit', 'delete'];
 
-	constructor( private productService: ProductService  ) {
+	constructor( private productService: ProductService, private router: Router  ) {
 
 		this.productService.getAll().pipe( map( data => {
+
 			let allProducts = [];
 			data.forEach(element => {
 				let obj = {};
+
 				obj["id"] = element.key;
 				obj["category"] = element.payload.val()["category"];
 				obj["title"] = element.payload.val()["title"];
@@ -38,12 +41,12 @@ export class AdminProductsComponent{
 		})).subscribe(( elements ) => {
 			this.datasource = elements;
 		});
+	}
 
-		// this.productService.getAll().pipe( map( data => {
-		// 	console.log( data );
-		// 	return of( data );
-		// })).subscribe(( elements ) => {
-		// 	this.datasource = elements;
-		// });
+	delete( id ){
+		if( confirm('Are you sure you want to delete this product?' )){
+			this.productService.delete( id );
+			this.router.navigate([ '/admin/products' ]);
+		}
 	}
 }
