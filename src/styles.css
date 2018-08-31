@@ -58,3 +58,10 @@ img{
 .mat-tab-group:hover{
 	background-color: #ccc;
 }
+
+.mat-ink-bar{
+    background-color:#00ADEE;
+}
+.mat-tab-label-active{
+	color: #00ADEE !important;
+}

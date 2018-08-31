@@ -141,6 +141,7 @@ import { ProductCardComponent } from './product-card/product-card.component';
 			ReactiveFormsModule,
 			CustomFormsModule,
 			DataTableModule,
+			MatTabsModule,
 			AngularFireModule.initializeApp( environment.firebase ),
 			AngularFireAuthModule,
 			AngularFireDatabaseModule,

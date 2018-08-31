@@ -17,11 +17,14 @@ export interface Product{
 	templateUrl: './products.component.html',
 	styleUrls: ['./products.component.css']
 })
+
 export class ProductsComponent{
 
 	products$: Product[] = [];
 	backupProducts$: Product[] = [];
 	categories$ = [];
+
+	active = "";
 
 	constructor( productService: ProductService, categoryService: CategoryService ) {
 		productService.getAll().pipe( map( data => {
@@ -52,7 +55,9 @@ export class ProductsComponent{
 		});
 	}
 
-	getDataForCategory( category ){
+	getDataForCategory( category, index ){
+
+		this.active = '.mat-tab-label-active';
 		if( category === "allProducts"){
 			this.products$ = this.backupProducts$;
 		}else{
