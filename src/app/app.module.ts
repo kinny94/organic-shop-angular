@@ -54,7 +54,6 @@ import {
 	MatMenuModule,
 	MatNativeDateModule,
 	MatPaginatorModule,
-	MatPaginator,
 	MatProgressBarModule,
 	MatProgressSpinnerModule,
 	MatRadioModule,
@@ -145,7 +144,7 @@ import { ProductService } from '../services/product.service';
 			AngularFireDatabaseModule,
 			NgbModule.forRoot(),
 			RouterModule.forRoot([
-				{	path: '',	component: HomeComponent },
+				{	path: '',	component: ProductsComponent },
 				{	path: 'products',	component: ProductsComponent},
 				{	path: 'cart',	component: CartComponent },
 				{	path: 'login',	component: LoginComponent },

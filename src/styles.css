@@ -7,6 +7,10 @@ body{
 	padding-bottom: 50px;
 }
 
+html *{
+	font-family: 'Montserrat', sans-serif !important;
+}
+
 .form-full-width, .mat-form-field{
 	min-width: 150px;
 	max-width: 100%;
@@ -29,4 +33,24 @@ body{
 	transform: scale(1.01);
 }
 
+img{
+	height: 300px;
+}
 
+.margin{
+	padding: 2%;
+}
+
+#center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.mat-card-title{
+	font-size: 4em;
+}
+
+.button-full-width{
+	width: 100%;
+}
