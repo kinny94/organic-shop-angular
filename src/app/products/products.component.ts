@@ -1,7 +1,16 @@
+import { Product } from './../admin/admin-products/admin-products.component';
 import { map } from 'rxjs/operators';
 import { ProductService } from './../../services/product.service';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CategoryService } from '../../services/category.service';
+
+export interface Product{
+	id: string,
+	title: string,
+	category: string,
+	price: number,
+	imageUrl: string
+}
 
 @Component({
 	selector: 'app-products',
@@ -10,7 +19,10 @@ import { CategoryService } from '../../services/category.service';
 })
 export class ProductsComponent{
 
-	products$ = [];
+	products$: Product[] = [];
+	backupProducts$: Product[] = [];
+	categories$ = [];
+
 	constructor( productService: ProductService, categoryService: CategoryService ) {
 		productService.getAll().pipe( map( data => {
 			let allProducts = [];
@@ -26,8 +38,27 @@ export class ProductsComponent{
 				obj = {};
 			});
 
-			this.products$ = allProducts;
-		})).subscribe();
+			return allProducts;
+		})).subscribe(( products ) => {
+			this.products$ = products;
+			this.backupProducts$ = products;
+		});
+
+		categoryService.getCategories().valueChanges().pipe( map( data => {
+			return data;
+		})).subscribe(( categories ) => {
+			console.log( categories );
+			this.categories$ = categories;
+		});
+	}
+
+	getDataForCategory( category ){
+		if( category === "allProducts"){
+			this.products$ = this.backupProducts$;
+		}else{
+			this.products$ = this.backupProducts$;
+			this.products$ = this.products$.filter( product => product.category === category );
+		}
 	}
 
 	ngOnInit() {

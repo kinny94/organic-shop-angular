@@ -1,21 +1,31 @@
 <div class="row" id="center">
-	<mat-spinner *ngIf="products$?.length === 0; products"></mat-spinner>
+	<mat-spinner *ngIf="products$?.length === 0 || categories$?.length === 0; else content"></mat-spinner>
 </div>
 
-<div class="row">
-	<div *ngFor="let p of products$"  class="col-4 margin">
-		<mat-card>
-			<mat-card-header id="center">
-				<mat-card-title><h4>{{ p.title }}</h4></mat-card-title>
-			</mat-card-header>
-			<img mat-card-image src="{{ p.imageUrl }}" alt="Photo of a Shiba Inu">
-			<mat-card-content>
-				<h5>Price: {{ p.price | currency : 'USD' : true}}</h5>
-			</mat-card-content>
-			<mat-card-actions>
-				<button class="button-full-width" mat-raised-button color="primary">Add to cart</button>
-			</mat-card-actions>
-		</mat-card>
+<ng-template #content>
+	<div class="row">
+			<mat-tab-group (click)="getDataForCategory( 'allProducts' )">
+				<mat-tab  label="All Products"></mat-tab>
+			</mat-tab-group>
+		<mat-tab-group (click)="getDataForCategory( category.name )" *ngFor="let category of categories$">
+			<mat-tab  label="{{ category.name }}"></mat-tab>
+		</mat-tab-group>
 	</div>
-</div>
+	<div class="row">
+		<div *ngFor="let p of products$"  class="col-4 margin">
+			<mat-card>
+				<mat-card-header id="center">
+					<mat-card-title><h4>{{ p.title }}</h4></mat-card-title>
+				</mat-card-header>
+				<img mat-card-image src="{{ p.imageUrl }}" alt="Photo of a Shiba Inu">
+				<mat-card-content>
+					<h5>Price: {{ p.price | currency : 'USD' : true}}</h5>
+				</mat-card-content>
+				<mat-card-actions>
+					<button class="button-full-width" mat-raised-button color="primary">Add to cart</button>
+				</mat-card-actions>
+			</mat-card>
+		</div>
+	</div>
+</ng-template>
 
