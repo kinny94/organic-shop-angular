@@ -71,6 +71,7 @@ import {
 	MatTooltipModule,
 	MatTreeModule, } from '@angular/material';
 import { ProductService } from '../services/product.service';
+import { ProductCardComponent } from './product-card/product-card.component';
 
 	@NgModule({
 		exports: [
@@ -111,7 +112,7 @@ import { ProductService } from '../services/product.service';
 			MatToolbarModule,
 			MatTooltipModule,
 			MatTreeModule,
-		]
+		],
 	})
 	export class DemoMaterialModule {}
 
@@ -130,6 +131,7 @@ import { ProductService } from '../services/product.service';
 			AdminOrdersComponent,
 			LoginComponent,
 			ProductFormComponent,
+			ProductCardComponent
 		],
 		imports: [
 			BrowserModule,

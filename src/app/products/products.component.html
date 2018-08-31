@@ -13,18 +13,7 @@
 	</div>
 	<div class="row">
 		<div *ngFor="let p of products$"  class="col-4 margin">
-			<mat-card>
-				<mat-card-header id="center">
-					<mat-card-title><h4>{{ p.title }}</h4></mat-card-title>
-				</mat-card-header>
-				<img mat-card-image src="{{ p.imageUrl }}" alt="Photo of a Shiba Inu">
-				<mat-card-content>
-					<h5>Price: {{ p.price | currency : 'USD' : true}}</h5>
-				</mat-card-content>
-				<mat-card-actions>
-					<button class="button-full-width" mat-raised-button color="primary">Add to cart</button>
-				</mat-card-actions>
-			</mat-card>
+			<product-card [product]="p"></product-card>
 		</div>
 	</div>
 </ng-template>

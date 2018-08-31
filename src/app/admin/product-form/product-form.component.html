@@ -51,12 +51,6 @@
 
 	</div>
 	<div class="col-6">
-		<mat-card *ngIf="product.title" class="example-card">
-			<mat-card-header>
-				<mat-card-title><strong>Item: </strong>{{ product.title }}</mat-card-title>
-				<mat-card-title><strong>Price: </strong>{{ product.price | currency: 'USD': true }}</mat-card-title>
-			</mat-card-header>
-			<img mat-card-image [src]="product.imageUrl" *ngIf="product.imageUrl">
-		</mat-card>
+		<product-card [product]="product" [show-actions]="false"></product-card>
 	</div>
 </div>
