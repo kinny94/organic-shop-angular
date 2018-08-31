@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { Sort, MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 
 export interface Product {
+	id: string,
 	title: string;
 	price: number;
 	category: string;

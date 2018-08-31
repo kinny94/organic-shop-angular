@@ -50,7 +50,6 @@ export class ProductsComponent{
 		categoryService.getCategories().valueChanges().pipe( map( data => {
 			return data;
 		})).subscribe(( categories ) => {
-			console.log( categories );
 			this.categories$ = categories;
 		});
 	}

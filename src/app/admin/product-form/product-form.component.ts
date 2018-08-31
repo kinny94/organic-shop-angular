@@ -37,7 +37,6 @@ export class ProductFormComponent{
 	save( product ){
 
 		if( this.id ){
-			//console.log( product );
 			this.productService.update( this.id, product );
 		}else{
 			this.productService.create( product );
