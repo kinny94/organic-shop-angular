@@ -1,4 +1,3 @@
-import { async } from '@angular/core/testing';
 import { CartService } from './../../services/cart.service';
 import { Component, Input } from '@angular/core';
 import { Product } from '../products/products.component';
