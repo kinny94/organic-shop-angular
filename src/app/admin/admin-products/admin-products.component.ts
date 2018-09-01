@@ -1,9 +1,9 @@
-import { of, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { ProductService } from './../../../services/product.service';
-import { Component, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnDestroy, ViewChild } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { Sort, MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
+import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 
 export interface Product {
 	id: string,

@@ -1,4 +1,4 @@
-import { map, take } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Injectable } from '@angular/core';
 import { Product } from '../app/admin/admin-products/admin-products.component';
@@ -8,6 +8,7 @@ import * as firebase from 'firebase';
 @Injectable({
 	providedIn: 'root'
 })
+
 export class CartService {
 
 	items$;
@@ -23,7 +24,7 @@ export class CartService {
 		return this.db.object('/cart' + cartId ).valueChanges();
 	}
 
-	private async getOrCreateCartId(){
+	async getOrCreateCartId(){
 		let cartId = localStorage.getItem('cartId');
 
 		if( !cartId ){
@@ -38,10 +39,10 @@ export class CartService {
 
 	async addToCart( product: Product){
 		let cartId = await this.getOrCreateCartId();
-		let item;
+
 		this.productService.getProduct( product.id ).pipe( map( result => {
 			return result;
-		})).subscribe( data => {
+		})).pipe( map( result  => {
 			let ref = firebase.database().ref(  '/cart/' + cartId + '/items/');
 			ref.child( product.id ).once( 'value', ( snapshot ) => {
 				if( snapshot.exists() ){
@@ -53,9 +54,15 @@ export class CartService {
 					let newProduct = firebase.database().ref(  '/cart/' + cartId + '/items/' + product.id );
 					product["quantity"] = 1;
 					newProduct.set({ product });
+					return product;
 				}
 			});
+		}))
+		.subscribe(( product ) => {
+			this.items$ = product;
 		});
+
+		return this.items$
 	}
 }
 

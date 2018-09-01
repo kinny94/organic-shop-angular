@@ -7,6 +7,25 @@
 		<h5>Price: {{ product.price | currency : 'USD' : true}}</h5>
 	</mat-card-content>
 	<mat-card-actions *ngIf="showActions">
-		<button (click)="addToCart( product )"class="button-full-width" mat-raised-button color="primary">Add to cart</button>
+			<button
+				*ngIf="quantity$ !== 0"
+				matBadge="{{ quantity$ }}"
+				matBadgePosition="before"
+				matBadgeColor="accent"
+				mat-raised-button
+				(click)="addToCart( product )"
+				class="button-full-width"
+				mat-raised-button color="primary"
+				>
+				Add to cart
+			</button>
+
+			<button
+				*ngIf="quantity$ === 0"
+				(click)="addToCart( product )"
+				class="button-full-width"
+				mat-raised-button color="primary"
+			>Add to cart
+			</button>
 	</mat-card-actions>
 </mat-card>
