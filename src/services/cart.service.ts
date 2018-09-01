@@ -1,3 +1,4 @@
+import { async } from '@angular/core/testing';
 import { map } from 'rxjs/operators';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Injectable } from '@angular/core';
@@ -63,6 +64,24 @@ export class CartService {
 		});
 
 		return this.items$
+	}
+
+	async removeFromCart( product ){
+		let cartId = await this.getOrCreateCartId();
+
+		this.productService.getProduct( product.id ).pipe( map( result => {
+			return result;
+		})).pipe( map( data  => {
+			let ref = firebase.database().ref(  '/cart/' + cartId + '/items/');
+			ref.child( product.id ).once('value', ( snapshot ) => {
+				let quantityRef = firebase.database().ref(  '/cart/' + cartId + '/items/' + product.id + "/product/quantity" );
+					quantityRef.transaction(( currentQuanitity ) => {
+						return ( currentQuanitity || 0 ) - 1;
+					})
+			})
+		})).subscribe(( product ) => {
+			this.items$ = product;
+		});
 	}
 }
 

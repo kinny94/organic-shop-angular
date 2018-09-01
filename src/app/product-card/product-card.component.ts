@@ -38,4 +38,8 @@ export class ProductCardComponent{
 	addToCart( product: Product ){
 		this.cartService.addToCart( product );
 	}
+
+	removeFromCart( product: Product ){
+		this.cartService.removeFromCart( product );
+	}
 }
