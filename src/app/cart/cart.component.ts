@@ -11,6 +11,7 @@ export class CartComponent implements OnInit {
 
 	cart$ = [];
 	totalPrice$: number = 0;
+
 	constructor( private cart: CartService) { }
 
 	async ngOnInit() {
@@ -19,7 +20,8 @@ export class CartComponent implements OnInit {
 			for( let i=0; i<this.cart$.length; i++ ){
 				let item  = this.cart$[i];
 				for(let key in this.cart$[i]){
-					if(  item[key]["product"]["quantity"] === 0 ){
+					console.log( item[key]["product"]["quantity"] );
+					if( item[key]["product"]["quantity"] === 0 ){
 						this.cart$.splice( i, 1 );
 					}
 				}
@@ -39,7 +41,6 @@ export class CartComponent implements OnInit {
 
 	removeFromCart( product ){
 		this.cart.removeFromCart( product );
-		this.ngOnInit();
 	}
 
 	addToCart( product ){
