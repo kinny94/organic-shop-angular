@@ -65,3 +65,7 @@ img{
 .mat-tab-label-active{
 	color: black !important;
 }
+
+.button-padding-left{
+	padding-left: 5%;
+}

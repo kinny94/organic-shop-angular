@@ -1,3 +1,41 @@
-<p>
-  cart works!
-</p>
+<div class="wrapper">
+	<div class="container">
+		<div id="center">
+			<mat-spinner *ngIf="cart$.length === 0"></mat-spinner>
+		</div>
+		<mat-accordion>
+			<mat-expansion-panel *ngFor="let item of cart$">
+				<mat-expansion-panel-header>
+					<mat-panel-title>
+						{{ item.product.title }}
+					</mat-panel-title>
+					<mat-panel-description>
+						Price: {{ item.product.quantity * item.product.price }}
+					</mat-panel-description>
+					<mat-panel-description>
+						Click for more info
+					</mat-panel-description>
+				</mat-expansion-panel-header>
+
+				<mat-list>
+					<mat-list-item>Title: {{ item.product.title }}</mat-list-item>
+					<mat-divider></mat-divider>
+					<mat-list-item>Price per products: {{ item.product.price }} </mat-list-item>
+					<mat-divider></mat-divider>
+					<mat-list-item>
+						Quantity: {{ item.product.quantity }}
+						&nbsp;<button mat-raised-button style="margin-left: 5px;" (click)="removeFromCart( item.product )" color="warn">Remove one</button>
+						&nbsp;<button mat-raised-button class="button-padding-left" color="primary">Add one</button>
+						&nbsp;<button mat-raised-button class="button-padding-left" color="warn">Remove all</button>
+					</mat-list-item>
+					<mat-divider></mat-divider>
+					<mat-list-item>Price: {{ item.product.price * item.product.quantity }}</mat-list-item>
+				</mat-list>
+			</mat-expansion-panel>
+		</mat-accordion>
+	</div>
+	<div class="container margin">
+		<h4>Total Price: {{ totalPrice$ }}</h4>
+		<button mat-raised-button color="primary" color="accent">Checkout</button>
+	</div>
+</div>
