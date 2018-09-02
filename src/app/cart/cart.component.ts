@@ -7,20 +7,21 @@ import * as firebase from 'firebase';
 	templateUrl: './cart.component.html',
 	styleUrls: ['./cart.component.css']
 })
-export class CartComponent implements OnInit {
+export class CartComponent{
 
 	cart$ = [];
 	totalPrice$: number = 0;
 
-	constructor( private cart: CartService) { }
+	constructor( private cart: CartService) {
+		this.getCartData().then( data => data );
+	}
 
-	async ngOnInit() {
+	async getCartData() {
 
 		if( this.cart$.length > 0 ){
 			for( let i=0; i<this.cart$.length; i++ ){
 				let item  = this.cart$[i];
 				for(let key in this.cart$[i]){
-					console.log( item[key]["product"]["quantity"] );
 					if( item[key]["product"]["quantity"] === 0 ){
 						this.cart$.splice( i, 1 );
 					}
@@ -40,10 +41,12 @@ export class CartComponent implements OnInit {
 	}
 
 	removeFromCart( product ){
+		this.cart$ = [];
 		this.cart.removeFromCart( product );
 	}
 
 	addToCart( product ){
+		this.cart$ = [];
 		this.cart.addToCart( product );
 	}
 }
