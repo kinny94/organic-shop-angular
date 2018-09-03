@@ -70,22 +70,27 @@ export class CartService {
 
 		this.productService.getProduct( product.id ).pipe( map( result => {
 			return result;
-		})).pipe( map( data  => {
-			let ref = firebase.database().ref(  '/cart/' + cartId + '/items/');
-			ref.child( product.id ).once('value', ( snapshot ) => {
-				let quantityRef = firebase.database().ref(  '/cart/' + cartId + '/items/' + product.id + "/product/quantity" );
-					quantityRef.once('value', (snapshot) => {
-						console.log( snapshot.val());
-						if( snapshot.val() > 0 ){
-							quantityRef.transaction(( currentQuanitity ) => {
-								return ( currentQuanitity || 0 ) - 1;
-							});
-						}
-					});
-			})
+		})).pipe( map(()  => {
+			let quantityRef = firebase.database().ref(  '/cart/' + cartId + '/items/' + product.id + "/product/quantity" );
+				quantityRef.once('value', (snapshot) => {
+					if( snapshot.val() > 1 ){
+						quantityRef.transaction(( currentQuanitity ) => {
+							return ( currentQuanitity || 0 ) - 1;
+						});
+					}else{
+						let removeRef = firebase.database().ref(  '/cart/' + cartId + '/items/' + product.id );
+						removeRef.remove();
+					}
+				});
 		})).subscribe(( product ) => {
 			this.items$ = product;
 		});
+	}
+
+	async removeAllSameProductFromCart( product ){
+		let cartId = await this.getOrCreateCartId();
+		let removeRef = firebase.database().ref(  '/cart/' + cartId + '/items/' + product.id );
+		removeRef.remove();
 	}
 }
 

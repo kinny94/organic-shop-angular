@@ -9,7 +9,7 @@ import * as firebase from 'firebase';
 })
 export class CartComponent{
 
-	cart$ = [];
+	cart$;
 	totalPrice$: number = 0;
 
 	constructor( private cart: CartService) {
@@ -18,21 +18,11 @@ export class CartComponent{
 
 	async getCartData() {
 
-		if( this.cart$.length > 0 ){
-			for( let i=0; i<this.cart$.length; i++ ){
-				let item  = this.cart$[i];
-				for(let key in this.cart$[i]){
-					if( item[key]["product"]["quantity"] === 0 ){
-						this.cart$.splice( i, 1 );
-					}
-				}
-			}
-		}
-
 		let cartId = await this.cart.getOrCreateCartId();
 		let cart = await firebase.database().ref(  '/cart/' + cartId + '/items/');
 		cart.on( 'value', (snapshot) => {
 			let items = snapshot.val();
+			this.cart$ = [];
 			for( let key in items ){
 				this.cart$.push( items[key ]);
 				this.totalPrice$ += parseFloat( items[key]["product"]["price"] ) *  parseFloat( items[key]["product"]["quantity"] );
@@ -42,11 +32,21 @@ export class CartComponent{
 
 	removeFromCart( product ){
 		this.cart$ = [];
+		this.totalPrice$ = 0;
 		this.cart.removeFromCart( product );
 	}
 
 	addToCart( product ){
 		this.cart$ = [];
+		this.totalPrice$ = 0;
 		this.cart.addToCart( product );
 	}
+
+	removeAll( product ){
+		this.cart$ = [];
+		this.totalPrice$ = 0;
+		this.cart.removeAllSameProductFromCart( product );
+	}
+
+	isNumber(val) { return Array.isArray( val ); }
 }

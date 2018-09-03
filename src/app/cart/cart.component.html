@@ -1,18 +1,26 @@
 <div id="center">
-	<mat-spinner *ngIf="cart$.length === 0; content"></mat-spinner>
+	<mat-spinner *ngIf="!cart$;"></mat-spinner>
 </div>
-<mat-list role="list" *ngFor="let item of cart$">
-	<mat-list-item role="listitem">
-		<p class="title-width">{{ item.product.title }}</p>
-		<p class="left-margin">Price:</p>&nbsp;<p matBadge="{{ item.product.quantity * item.product.price }}" matBadgeOverlap="false"></p>
-		<p class="left-margin">Quantity:</p>&nbsp;<p matBadge="{{ item.product.quantity }}" matBadgeColor="accent" matBadgeOverlap="false"></p>
-		<p class="left-margin"><button mat-raised-button style="margin-left: 5px;" (click)="removeFromCart( item.product )" color="warn">Remove one</button></p>
-		<p class="left-margin"><button mat-raised-button class="button-padding-left" (click)="addToCart( item.product )" color="primary">Add one</button></p>
-		<p class="left-margin"><button mat-raised-button class="button-padding-left" color="warn">Remove all</button></p>
-		<mat-divider></mat-divider>
-	</mat-list-item>
-</mat-list>
-<div class="container margin">
-	<h4>Total Price: {{ totalPrice$ }}</h4>
-	<button mat-raised-button color="primary" color="accent">Checkout</button>
+<div class="row" *ngIf="isNumber( cart$ ) && cart$.length === 0; else products">
+	<div id="center">
+		<h3>Nothing in here!!...Go Shop.</h3>
+	</div>
 </div>
+
+<ng-template #products>
+	<mat-list role="list" *ngFor="let item of cart$">
+			<mat-list-item role="listitem">
+				<p class="title-width">{{ item.product.title }}</p>
+				<p class="left-margin">Price:</p>&nbsp;<p matBadge="{{ item.product.quantity * item.product.price }}" matBadgeOverlap="false"></p>
+				<p class="left-margin">Quantity:</p>&nbsp;<p matBadge="{{ item.product.quantity }}" matBadgeColor="accent" matBadgeOverlap="false"></p>
+				<p class="left-margin"><button mat-raised-button style="margin-left: 5px;" (click)="removeFromCart( item.product )" color="warn">Remove one</button></p>
+				<p class="left-margin"><button mat-raised-button class="button-padding-left" (click)="addToCart( item.product )" color="primary">Add one</button></p>
+				<p class="left-margin"><button mat-raised-button class="button-padding-left" (click)="removeAll( item.product )" color="warn">Remove all</button></p>
+				<mat-divider></mat-divider>
+			</mat-list-item>
+		</mat-list>
+		<div class="container margin">
+			<h4>Total Price: {{ totalPrice$ }}</h4>
+			<button mat-raised-button color="primary" color="accent">Checkout</button>
+		</div>
+</ng-template>
