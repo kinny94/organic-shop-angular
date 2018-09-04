@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import * as firebase from 'firebase';
 
 @Component({
@@ -23,8 +23,6 @@ export class MyOrdersComponent{
 					});
 				}
 			}
-
-			//console.log( this.orders$ );
 		});
 	}
 }

@@ -1,3 +1,23 @@
 <div class="container">
+	<div class="row">
+		<h4 *ngIf="orders$?.length === 0">You haven't placed any order yet!</h4>
+		<mat-accordion *ngFor="let order of orders$" class="form-full-width">
+			<mat-expansion-panel>
+				<mat-expansion-panel-header>
+					<mat-panel-title>
+						{{ order[0]["date"]}}
+					</mat-panel-title>
+					<mat-panel-description>
+						Click to view all items
+					</mat-panel-description>
+				</mat-expansion-panel-header>
 
+				<mat-list role="list">
+					<mat-list-item role="listitem" *ngFor="let item of order">
+						{{ item.quantity }} x {{ item.title }} for ${{ item.price * item.quantity }}
+					</mat-list-item>
+				</mat-list>
+			</mat-expansion-panel>
+		</mat-accordion>
+	</div>
 </div>

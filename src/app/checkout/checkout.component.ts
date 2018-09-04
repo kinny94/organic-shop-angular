@@ -54,7 +54,7 @@ export class CheckoutComponent implements OnInit {
 			let users = snapshot.val();
 			for( let user in users ){
 				if( users[user].email === currentUser ){
-					console.log( products );
+
 					firebase.database().ref('/users/' + user + "/orders/" ).push( products );
 					firebase.database().ref('/cart/' + cartId ).remove();
 					this.router.navigate(['/my/orders']);
