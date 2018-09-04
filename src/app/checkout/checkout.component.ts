@@ -37,6 +37,13 @@ export class CheckoutComponent implements OnInit {
 		firebase.database().ref('/cart/' + cartId + "/items/").on('value', (snapshot) => {
 			let items = snapshot.val();
 			for( let item in items ){
+				let date =  new Date().getDate();
+				let month = new Date().getMonth();
+				let year = new Date().getFullYear();
+				let time = new Date().getTime();
+
+				let fullDate = month + "/" + date + "/" + year + " @ " + time;
+				items[item].product["date"] = fullDate;
 				let product = items[item].product
 				products.push( product );
 			}
@@ -47,6 +54,7 @@ export class CheckoutComponent implements OnInit {
 			let users = snapshot.val();
 			for( let user in users ){
 				if( users[user].email === currentUser ){
+					console.log( products );
 					firebase.database().ref('/users/' + user + "/orders/" ).push( products );
 					firebase.database().ref('/cart/' + cartId ).remove();
 					this.router.navigate(['/my/orders']);
