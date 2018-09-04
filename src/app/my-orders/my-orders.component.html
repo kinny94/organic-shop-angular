@@ -1,5 +1,6 @@
 <div class="container">
 	<div class="row">
+		<h3 id="center">Previous Orders</h3>
 		<h4 *ngIf="orders$?.length === 0">You haven't placed any order yet!</h4>
 		<mat-accordion *ngFor="let order of orders$" class="form-full-width">
 			<mat-expansion-panel>
