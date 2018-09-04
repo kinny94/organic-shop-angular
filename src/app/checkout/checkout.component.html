@@ -1,3 +1,42 @@
-<p>
-  checkout works!
-</p>
+<div class="container">
+	<div class="row" id="center">
+		Provide your shipping information.
+	</div>
+	<form [formGroup] = "shipping" class="form" #f="ngForm" (ngSubmit)="save(f.value)" >
+		<mat-form-field>
+			<input matInput placeholder="Company" disabled value="Organic Shop">
+		</mat-form-field>
+
+		<table cellspacing="0"><tr>
+			<td><mat-form-field>
+				<input name="firstname" id="firstname" formControlName="firstname" matInput placeholder="First name" required>
+			</mat-form-field></td>
+			<td><mat-form-field>
+				<input formControlName="lastname" name="lastname" id="lastname" matInput placeholder="Last Name" required>
+			</mat-form-field></td>
+		</tr></table>
+
+		<p>
+			<mat-form-field>
+				<textarea formControlName="address" name="address" id="address" matInput placeholder="Street Address" required></textarea>
+			</mat-form-field>
+			<mat-form-field>
+				<textarea name="address2" id="address2" matInput placeholder="Address 2" required></textarea>
+			</mat-form-field>
+		</p>
+
+		<table cellspacing="0"><tr>
+			<td><mat-form-field>
+				<input  formControlName="city" name="city" id="city" matInput placeholder="City" required>
+			</mat-form-field></td>
+			<td><mat-form-field>
+				<input formControlName="state" name="state" id="state" matInput placeholder="State" required>
+			</mat-form-field></td>
+			<td><mat-form-field>
+				<input  formControlName="zip" name="zip" id="zip" matInput maxlength="5" placeholder="Postal Code" required>
+				<mat-hint align="end" #zip>Zip Code</mat-hint>
+			</mat-form-field></td>
+		</tr></table>
+		<button [disabled] = "!shipping.valid"  mat-raised-button color="primary" type="submit">Submit</button>
+	</form>
+</div>

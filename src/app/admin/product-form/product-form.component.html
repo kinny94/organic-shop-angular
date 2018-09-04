@@ -3,7 +3,7 @@
 		<form class="form" #f="ngForm" (ngSubmit)="save(f.value)">
 			<div>
 				<mat-form-field class="form-full-width">
-					<input #title="ngModel" [(ngModel)]="product.title" name="title" id="title" matInput placeholder="Title" required>
+					<input class="form-control" #title="ngModel" [(ngModel)]="product.title" name="title" id="title" matInput placeholder="Title" required>
 					<mat-error *ngIf="title.touched && title.invalid">
 						Title is <strong>required</strong>
 					</mat-error>
