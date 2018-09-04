@@ -3,7 +3,16 @@
 		<form class="form" #f="ngForm" (ngSubmit)="save(f.value)">
 			<div>
 				<mat-form-field class="form-full-width">
-					<input class="form-control" #title="ngModel" [(ngModel)]="product.title" name="title" id="title" matInput placeholder="Title" required>
+					<input
+						class="form-control"
+						#title="ngModel"
+						[(ngModel)]="product.title"
+						name="title"
+						id="title"
+						matInput
+						placeholder="Title"
+						required
+					>
 					<mat-error *ngIf="title.touched && title.invalid">
 						Title is <strong>required</strong>
 					</mat-error>
@@ -12,7 +21,16 @@
 
 			<div>
 				<mat-form-field class="form-full-width">
-					<input #price="ngModel" [(ngModel)]="product.price" name="price" id="price" type="number" matInput placeholder="Price" required [min]=0>
+					<input
+						#price="ngModel"
+						[(ngModel)]="product.price"
+						name="price"
+						id="price"
+						type="number"
+						matInput
+						placeholder="Price"
+						required [min]=0
+					>
 					<span matPrefix>$&nbsp;</span>
 					<span matSuffix>.00</span>
 					<mat-error *ngIf="price.touched && price.invalid">
@@ -22,7 +40,14 @@
 				</mat-form-field>
 			</div>
 			<mat-form-field class="form-full-width">
-				<mat-select #category="ngModel"  [(ngModel)]="product.category" name="category" id="category" placeholder="Category" required>
+				<mat-select
+					#category="ngModel"
+					[(ngModel)]="product.category"
+					name="category"
+					id="category"
+					placeholder="Category"
+					required
+				>
 					<mat-option *ngFor="let c of categories$ | async" [value]="c.name">
 						{{ c.name }}
 					</mat-option>
@@ -32,10 +57,17 @@
 				</mat-error>
 			</mat-form-field>
 
-
 			<div>
 				<mat-form-field class="form-full-width">
-					<input #imageUrl="ngModel"  [(ngModel)]="product.imageUrl	" name="imageUrl" id="imageUrl" matInput placeholder="Image Url" required url>
+					<input
+						#imageUrl="ngModel"
+						[(ngModel)]="product.imageUrl"
+						name="imageUrl"
+						id="imageUrl"
+						matInput
+						placeholder="Image Url"
+						required url
+					>
 					<mat-error *ngIf="imageUrl.touched && imageUrl.invalid">
 						<mat-error *ngIf="imageUrl.errors.required">Url is <strong>required</strong></mat-error>
 						<mat-error *ngIf="imageUrl.errors.url">Image Url is <strong>invalid</strong></mat-error>

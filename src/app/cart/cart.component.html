@@ -21,6 +21,6 @@
 		</mat-list>
 		<div class="container margin">
 			<h4>Total Price: {{ totalPrice$ }}</h4>
-			<button routerLink="/checkout" mat-raised-button color="primary" color="accent">Checkout</button>
+			<button (click)="goToCheckout()" mat-raised-button color="primary" color="accent">Checkout</button>
 		</div>
 </ng-template>

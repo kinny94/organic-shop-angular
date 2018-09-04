@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { CartService } from './../../services/cart.service';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Component, OnInit, Input } from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
+import * as firebase from 'firebase';
+
 
 @Component({
 	selector: 'app-checkout',
@@ -8,6 +12,8 @@ import {FormGroup, FormControl, Validators} from '@angular/forms';
 })
 export class CheckoutComponent implements OnInit {
 
+	@Input('cart$') cart$;
+
 	shipping:any =  {};
 	firstname;
 	lastname;
@@ -15,13 +21,39 @@ export class CheckoutComponent implements OnInit {
 	city;
 	state;
 	zip;
+	cartId;
 
-	constructor() { }
+	constructor( private activatedRoute: ActivatedRoute, private router: Router, private cartService: CartService ) {
+		this.activatedRoute.params.subscribe(( params: Params ) => {
+			this.cartId = params.cartId;
+		});
+	}
 
-	save( data ){
-		if( data ){
-			alert("ORder Placed!");
-		}
+	async save( data ){
+		let cartId = await this.cartService.getOrCreateCartId();
+		let currentUser = firebase.auth().currentUser.email;
+		let products = [];
+
+		firebase.database().ref('/cart/' + cartId + "/items/").on('value', (snapshot) => {
+			let items = snapshot.val();
+			for( let item in items ){
+				let product = items[item].product
+				products.push( product );
+			}
+		});
+
+		let userRef = firebase.database().ref('/users/');
+		userRef.once('value', ( snapshot ) => {
+			let users = snapshot.val();
+			for( let user in users ){
+				if( users[user].email === currentUser ){
+					firebase.database().ref('/users/' + user + "/orders/" ).push( products );
+					firebase.database().ref('/cart/' + cartId ).remove();
+					this.router.navigate(['/my/orders']);
+				}
+			}
+		})
+
 	}
 
 	ngOnInit() {

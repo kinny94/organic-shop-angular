@@ -1,6 +1,7 @@
 import { CartService } from './../../services/cart.service';
 import { Component, OnInit } from '@angular/core';
 import * as firebase from 'firebase';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-cart',
@@ -12,7 +13,7 @@ export class CartComponent{
 	cart$;
 	totalPrice$: number = 0;
 
-	constructor( private cart: CartService) {
+	constructor( private cart: CartService, private router: Router) {
 		this.getCartData().then( data => data );
 	}
 
@@ -49,4 +50,9 @@ export class CartComponent{
 	}
 
 	isNumber(val) { return Array.isArray( val ); }
+
+	async goToCheckout(){
+		let cartId = await this.cart.getOrCreateCartId();
+		this.router.navigate(['/checkout', { cartId }]);
+	}
 }
