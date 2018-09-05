@@ -10,20 +10,27 @@ export class MyOrdersComponent{
 
 	orders$;
 	constructor() {
-		let currentUser = firebase.auth().currentUser.email;
-		firebase.database().ref('/users/').on( 'value', (snapshot) => {
-			let users = snapshot.val();
-			for( let user in users ){
-				if( users[user].email === currentUser ){
-					firebase.database().ref('/users/' + user + "/orders/").on('value', (snapshot) => {
-						this.orders$ = [];
-						let orders = snapshot.val();
-						for( let order in orders ){
-							this.orders$.push( orders[order ]);
-						}
-					});
+		this.getData().then( data => data );
+	}
+
+	getData(){
+		return new Promise((resolve, reject) => {
+			let currentUser = firebase.auth().currentUser.email;
+			firebase.database().ref('/users/').on( 'value', (snapshot) => {
+				let users = snapshot.val();
+				for( let user in users ){
+					if( users[user].email === currentUser ){
+						firebase.database().ref('/users/' + user + "/orders/").on('value', (snapshot) => {
+							this.orders$ = [];
+							let orders = snapshot.val();
+							for( let order in orders ){
+								this.orders$.push( orders[order ]);
+							}
+							resolve( this.orders$ );
+						});
+					}
 				}
-			}
+			});
 		});
 	}
 }

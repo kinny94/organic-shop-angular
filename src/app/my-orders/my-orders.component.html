@@ -1,32 +1,28 @@
-<div class="container">
-	<div>
-			<h3 id="center">Previous Orders</h3>
-	</div>
-		<div id="center">
-			<mat-spinner *ngIf="!orders$; else content"></mat-spinner>
-		</div>
-		<ng-template #content>
-
-			<div class="row">
-				<h4 *ngIf="orders$?.length === 0">You haven't placed any order yet!</h4>
-			</div>
-			<mat-accordion *ngFor="let order of orders$" class="form-full-width">
-				<mat-expansion-panel>
-					<mat-expansion-panel-header>
-						<mat-panel-title>
-							{{ order[0]["date"]}}
-						</mat-panel-title>
-						<mat-panel-description>
-							Click to view all items
-						</mat-panel-description>
-					</mat-expansion-panel-header>
-
-					<mat-list role="list">
-						<mat-list-item role="listitem" *ngFor="let item of order">
-							{{ item.quantity }} x {{ item.title }} for ${{ item.price * item.quantity }}
-						</mat-list-item>
-					</mat-list>
-				</mat-expansion-panel>
-			</mat-accordion>
-		</ng-template>
+<div class="row" id="center">
+	<h3>Previous Orders</h3>
 </div>
+<div *ngIf="!orders$;else content" class="row" id="center" >
+	<mat-spinner></mat-spinner>
+</div>
+<ng-template #content>
+	<h4 *ngIf="orders$?.length === 0">You haven't placed any order!</h4>
+	<mat-accordion *ngFor="let order of orders$" class="form-full-width">
+		<mat-expansion-panel>
+			<mat-expansion-panel-header>
+				<mat-panel-title>
+					{{ order[0]["date"]}}
+				</mat-panel-title>
+				<mat-panel-description>
+					Click to view all items
+				</mat-panel-description>
+			</mat-expansion-panel-header>
+
+			<mat-list role="list">
+				<mat-list-item role="listitem" *ngFor="let item of order">
+					{{ item.quantity }} x {{ item.title }} for ${{ item.price * item.quantity }}
+				</mat-list-item>
+			</mat-list>
+		</mat-expansion-panel>
+	</mat-accordion>
+</ng-template>
+
